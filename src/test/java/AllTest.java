@@ -1,3 +1,4 @@
+import arrayutils.ArrayUtils;
 import exception.UtilsException;
 import fileutils.FileUtils;
 import org.testng.annotations.Test;
@@ -25,7 +26,7 @@ public class AllTest {
 
     @Test
     public void test3() throws UtilsException {
-        FileUtils.deleteFile(new File("/Users/zhangsy/Desktop" + File.separator + "acopy"));
+        FileUtils.deleteFile(new File("/Users/zhangsy/Desktop" + File.separator + "a.txt"));
     }
 
     @Test
@@ -37,6 +38,13 @@ public class AllTest {
     public void test5() throws UtilsException {
         System.out.println(FileUtils.getExtensionName(new File("/Users/zhangsy/Desktop/a/1.txt")));
         System.out.println(new File("/Users/zhangsy/Desktop/a/1.txt").getName());
+    }
+
+    @Test
+    public void test6() {
+        Integer[] a = {1,2,3};
+        Integer[] integers = ArrayUtils.expandCapacity(a, 2);
+        System.out.println(integers.length);
     }
 
     @Test
