@@ -1,10 +1,12 @@
 import arrayutils.ArrayUtils;
+import dateutils.DateUtils;
 import exception.UtilsException;
 import fileutils.FileUtils;
 import org.testng.annotations.Test;
 import stringutils.StringUtils;
 
 import java.io.*;
+import java.util.Date;
 
 /**
  * @author zhangsy
@@ -42,9 +44,21 @@ public class AllTest {
 
     @Test
     public void test6() {
-        Integer[] a = {1,2,3};
+        Integer[] a = {1, 2, 3};
         Integer[] integers = ArrayUtils.expandCapacity(a, 2);
         System.out.println(integers.length);
+    }
+
+    @Test
+    public void test7() {
+        Date date = DateUtils.calculateByDays(new Date(), -1);
+        System.out.println(new Date().getTime() / 1000 / 60 / 60 - date.getTime() / 1000 / 60 / 60);
+    }
+
+    @Test
+    public void test8() {
+        Date date = DateUtils.calculateDate(new Date(), -1, 0, 0, 0);
+        System.out.println(DateUtils.calculateTwoDistances(new Date(), date));
     }
 
     @Test

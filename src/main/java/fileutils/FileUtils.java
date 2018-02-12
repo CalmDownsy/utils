@@ -1,10 +1,12 @@
 package fileutils;
 
-
 import constants.Constants;
 import exception.UtilsException;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 /**
  * @author zhangsy
@@ -122,5 +124,40 @@ public class FileUtils {
             }
         }
         return fileName.substring(extensionIndex + 1);
+    }
+
+    /**
+     * 从网络下载文件到本地
+     *
+     * @param url      下载地址
+     * @param fileName 保存的文件名
+     * @param savePath 保存地址
+     */
+    public static void downloadFile(String url, String fileName, String savePath) throws IOException, UtilsException {
+        if (StringUtils.isEmpty(url)) {
+            throw new UtilsException(Constants.FILE_EXCEPTION_CODE, "下载地址错误");
+        }
+        URL downloadUrl = new URL(url);
+        HttpURLConnection httpURLConnection = (HttpURLConnection) downloadUrl.openConnection();
+        //设置超时时间
+        httpURLConnection.setReadTimeout(3 * 1000);
+        //获取文件流
+        InputStream is = httpURLConnection.getInputStream();
+        //文件保存位置
+        File saveDir = new File(savePath);
+        if (!saveDir.exists()) {
+            saveDir.mkdir();
+        }
+        File saveFile = new File(saveDir + File.separator + fileName);
+        //自定义缓冲区
+        byte[] bufferSize = new byte[1024];
+        FileOutputStream fos = new FileOutputStream(saveFile);
+        int read;
+        while ((read = is.read(bufferSize)) != -1) {
+            fos.write(bufferSize, 0, read);
+        }
+        //关闭文件流
+        fos.close();
+        is.close();
     }
 }
